@@ -1,4 +1,4 @@
-// Array contendo a lista de produtos da hamburgueria
+// Array da lista de produtos da hamburgueria
 const produtos = [
     {
         id: 1,
@@ -98,6 +98,19 @@ const produtos = [
     }
 ];
 
+const CHAVE_STORAGE = "kbs_hamburgueria_carrinho";
+
+// READ
+function obterCarrinho() {
+    const dados = localStorage.getItem(CHAVE_STORAGE);
+    return dados ? JSON.parse(dados) : [];
+}
+
+// Salva o estado atual do carrinho no navegador
+function salvarCarrinho(carrinho) {
+    localStorage.setItem(CHAVE_STORAGE, JSON.stringify(carrinho));
+}
+
 console.log("Produtos carregados com sucesso!", produtos);
 
 function exibirCardapio() {
@@ -138,44 +151,72 @@ function exibirCardapio() {
     });
 }
 
-// Altera a quantidade ao clicar em + ou -
+// CREATE / UPDATE: Adiciona ou diminui itens manipulando o LocalStorage
 function alterarQuantidade(id, valor) {
-    const qtdElemento = document.getElementById(`qtd-${id}`);
-    if (!qtdElemento) return;
+    const carrinho = obterCarrinho();
+    
+   
+    const itemExistente = carrinho.find(item => item.id === id);
+    
 
-    let qtdAtual = parseInt(qtdElemento.innerText);
-    qtdAtual += valor;
+    const produtoOriginal = produtos.find(p => p.id === id);
+    if (!produtoOriginal) return;
 
-    if (qtdAtual < 0) qtdAtual = 0;
-    qtdElemento.innerText = qtdAtual;
-
-    atualizarResumo();
-}
-
-// Zera a contagem ao clicar na lixeira
-function zerarQuantidade(id) {
-    const qtdElemento = document.getElementById(`qtd-${id}`);
-    if (qtdElemento) {
-        qtdElemento.innerText = "0";
-        atualizarResumo();
+    if (itemExistente) {
+        // UPDATE
+        itemExistente.quantidade += valor;
+        
+        
+        if (itemExistente.quantidade <= 0) {
+            zerarQuantidade(id);
+            return;
+        }
+    } else if (valor > 0) {
+        // CREATE
+        carrinho.push({
+            id: produtoOriginal.id,
+            nome: produtoOriginal.nome,
+            preco: produtoOriginal.preco,
+            quantidade: 1
+        });
     }
+
+    salvarCarrinho(carrinho);
+    atualizarInterfaceGrafica();
 }
 
-// Função que varre a tela, soma tudo e exibe o resumo matemático
-function atualizarResumo() {
+// DELETE
+function zerarQuantidade(id) {
+    let carrinho = obterCarrinho();
+ 
+    carrinho = carrinho.filter(item => item.id !== id);
+    
+    salvarCarrinho(carrinho);
+    atualizarInterfaceGrafica();
+}
+// READ
+function atualizarInterfaceGrafica() {
+    const carrinho = obterCarrinho();
     let totalItens = 0;
     let valorTotalGeral = 0;
 
-    produtos.forEach(produto => {
-        const qtdElemento = document.getElementById(`qtd-${produto.id}`);
-        if (qtdElemento) {
-            const quantidade = parseInt(qtdElemento.innerText);
-            
-            totalItens += quantidade;
-            valorTotalGeral += (quantidade * produto.preco); // 🌟 Corrigido aqui
-        }
+  
+    produtos.forEach(p => {
+        const spanQtd = document.getElementById(`qtd-${p.id}`);
+        if (spanQtd) spanQtd.innerText = "0";
     });
 
+   
+    carrinho.forEach(item => {
+        const spanQtd = document.getElementById(`qtd-${item.id}`);
+        if (spanQtd) {
+            spanQtd.innerText = item.quantidade;
+        }
+        totalItens += item.quantidade;
+        valorTotalGeral += (item.quantidade * item.preco);
+    });
+
+   
     const resumoQtd = document.getElementById("resumo-qtd-total");
     const resumoValor = document.getElementById("resumo-valor-total");
 
@@ -185,20 +226,27 @@ function atualizarResumo() {
     }
 }
 
-// Direciona para a página de sucesso se houver itens no carrinho
+// página de sucesso 
 function enviarPedido() {
-    const resumoQtd = document.getElementById("resumo-qtd-total");
-    if (!resumoQtd) return;
+   
+    const carrinho = obterCarrinho();
+    
+    // Somamos as quantidades de tudo que está na sacola
+    const totalItens = carrinho.reduce((soma, item) => soma + item.quantidade, 0);
 
-    const totalItens = parseInt(resumoQtd.innerText);
-
+    // Se a soma for zero, bloqueia o envio
     if (totalItens === 0) {
         alert("Ops! Adicione pelo menos 1 item ao seu pedido antes de finalizar.");
         return;
     }
 
+    
+    localStorage.removeItem(CHAVE_STORAGE);
+
     window.location.href = "sucesso.html";
 }
 
-// Executa a função assim que a página terminar de carregar
-window.addEventListener("DOMContentLoaded", exibirCardapio);
+window.addEventListener("DOMContentLoaded", () => {
+    exibirCardapio();            // Desenha os cards na tela
+    atualizarInterfaceGrafica(); // Preenche as quantidades salvas no LocalStorage
+});
