@@ -7,14 +7,14 @@ body {
  
 }
 
-/* Configuração básica do container (aplica-se a todas as seções) */
+/* Configuração básica do container */
 .container {
-    max-width: 1200px; /* Largura máxima para centrar o conteúdo */
+    max-width: 1200px; 
     margin: 0 auto;
     padding: 0 15px;
     display: flex;
-    align-items: center; /* Alinha itens verticalmente ao centro */
-    justify-content: space-between; /* Distribui o espaço entre os itens */
+    align-items: center;
+    justify-content: space-between; /
 }
 
     /* ====================================
@@ -29,73 +29,56 @@ body {
 
 }
 .header-logo img {
-    /* 🛠️ COLOQUE AQUI: Defina a altura máxima desejada, por exemplo, 70px */
     max-height: 180px; 
     width: auto; 
 }
 /* ====================================
    AJUSTE DE TAMANHO DA LOGO
    ==================================== */
-
-/* 3. Se o espaço vertical acima/abaixo estiver grande, reduza o padding do main-header */
 .main-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
-    /* ... outras propriedades ... */
-    padding: 1px 0; /* Exemplo: Se estava 20px 0, reduza para 10px 0 (veja linha 68) */
-    /* ... */
+    padding: 1px 0; 
     border-bottom: 1px solid #521010;
 }
 /* ====================================
    2. MAIN HEADER (LOGO, PESQUISA)
    ==================================== */
 
-/* Estilo da barra de pesquisa (Flexbox) */
-
-/* Ajuste no Estilo da barra de pesquisa (Flexbox) */
+/* Ajuste no Estilo da barra de pesquisa */
 .search-bar {
     display: flex;
-    align-items: center; /* Garante que o input e o botão estejam alinhados */
-    /* Remove flex-grow: 1 para que a busca não ocupe todo o espaço. 
-       Ajuste max-width conforme o tamanho desejado. */
+    align-items: center; 
     max-width: 500px;
     margin: 0;
     border: 2px solid #521010;
     border-radius: 4px;
-    /* overflow: hidden; */ /* Pode ser removido */
-    width: 500px;/* largura específica para a barra de busca */
+    width: 500px;
 }
 .search-bar input {
     border: none;
     padding: 10px 15px;
     flex-grow: 1; 
     outline: none;
-    /* Ajuste: O input agora cresce e preenche o espaço antes do botão */
+    
 }
 
 .search-bar .btn-search {
-    /* Mantenha o estilo do botão, mas ajuste o padding para ser mais quadrado e centralizar o ícone */
-    background-color: #521010;/*Use a cor da borda para melhor integração */
+    
+    background-color: #521010;
     color: white;
     border: none;
-    padding: 10px 15px; /* Ajuste o padding para harmonizar */
+    padding: 10px 15px; 
     cursor: pointer;
-    transition: background-color 0.3s;
-    /* Remove width: 100%; se estiver presente */
-    display: flex; /* Garante que o ícone fique centralizado no botão */
+    transition: background-color 0.3s;  
+    display: flex; 
     align-items: center;
     justify-content: center;
-    border-radius: 0 4px 4px 0; /* Arredonda apenas o canto direito */
+    border-radius: 0 4px 4px 0; 
 }
-/* Efeito ao passar o mouse no botão da lupa */
-.btn-search:hover {
-    background-color: #731818; 
-}
-
-/* Garante o tamanho do ícone da lupa */
 .btn-search i {
     font-size: 16px;
 }
@@ -115,18 +98,16 @@ body {
     text-transform: uppercase;
 
 }
-/* Configuração da grade de produtos */
+/* Grade de produtos */
 .cardapio-grid {
     display: grid;
-    /* 🌟 Força a linha a ter exatamente 3 colunas iguais no desktop */
     grid-template-columns: repeat(4, 1fr); 
-    gap: 30px; /* Espaço entre os cartões */
-    max-width: 1200px; /* Limita a largura para alinhar com o cabeçalho */
-    margin: 40px auto 0 auto; /* O 'auto' nas laterais centraliza a grid inteira na tela */
+    gap: 30px; 
+    max-width: 1200px; 
+    margin: 40px auto 0 auto; 
     padding: 0 15px;
 }
 
-/* Estilo do cartão de cada hambúrguer */
 .burger-card {
      text-align: left;
     display: flex;
@@ -138,31 +119,24 @@ body {
     overflow: hidden;
 
 }
-/* Container que envolve a foto do hambúrguer */
 .burger-img-container {
     width: 100%;
-    height: 180px; /* Altura fixa para manter todos os cards simétricos */
-    overflow: hidden; /* Corta qualquer sobra da imagem */
+    height: 180px; 
+    overflow: hidden; 
     border-radius: 6px;
-    background-color: #f5f5f5; /* Fundo cinza claro caso a imagem falhe */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* A foto em si */
+/* A confifuração da foto */
 .burger-thumb {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 🌟 ESSENCIAL: Ajusta e preenche a foto sem distorcer ou esticar o hambúrguer */
+    object-fit: cover; 
     transition: transform 0.3s ease;
 }
-
-/* Efeito de zoom na foto quando passar o mouse no card */
-.burger-card:hover .burger-thumb {
-    transform: scale(1.08); /* Dá um leve zoom charmoso na foto do produto */
-}   
-/* Container que agrupa a quantidade e o botão de excluir */
+/* quantidade e o botão de excluir */
 .card-controls {
     display: flex;
     align-items: center;
@@ -172,7 +146,7 @@ body {
     width: 100%;
 }
 
-/* Caixa seletora de quantidade (- 0 +) */
+/* quantidade (- 0 +) */
 .quantity-selector {
     display: flex;
     align-items: center;
@@ -180,7 +154,7 @@ body {
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     overflow: hidden;
-    flex-grow: 1; /* Faz a caixinha ocupar a maior parte do espaço lateral */
+    flex-grow: 1; 
     justify-content: space-between;
 }
 
@@ -202,7 +176,7 @@ body {
     color: #521010;
 }
 
-/* O número da contagem no meio */
+/* O número da contagem  */
 .qty-number {
     font-size: 16px;
     font-weight: bold;
@@ -230,7 +204,7 @@ body {
     background-color: #e74c3c;
     color: #fff;
 }
-/* Container que fixa o resumo na parte de baixo do navegador */
+/* resumo pedido */
 .checkout-summarycontainer {
     position: fixed;
     bottom: 0;
@@ -239,17 +213,17 @@ body {
     background-color: #ffffff;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     padding: 15px 0;
-    z-index: 999; /* Fica por cima de qualquer outro elemento */
+    z-index: 999; 
 }
 
-/* Alinhamento interno do painel */
+
 .checkout-summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Bloco de informações de textos */
+
 .summary-info {
     display: flex;
     flex-direction: column;
@@ -266,7 +240,7 @@ body {
 }
 
 .summary-total strong {
-    color: #521010; /* Tom de vinho da hamburgueria */
+    color: #521010; 
 }
 
 /* Botão de Finalizar Pedido */
@@ -287,10 +261,9 @@ body {
 }
 
 .btn-finalizar:active {
-    transform: scale(0.98); /* Efeito de clique sutil */
+    transform: scale(0.98); /* Efeito de clique */
 }
 
-/* ⚠️ Ajuste importante: Dá um espaçamento na base do body para os cartões do cardápio não sumirem atrás do painel fixo */
 body {
     padding-bottom: 100px;
 }
